@@ -14,6 +14,8 @@ namespace Sample
             builder.RegisterType<ConsoleOutput>().As<IOutput>();
             builder.RegisterType<TodayWriter>().As<IDateWriter>();
 
+            builder.RegisterType<MyComponent>().UsingConstructor(typeof(ILogger), typeof(IConfigReader));
+
             Container = builder.Build();
 
             WriteDate();
