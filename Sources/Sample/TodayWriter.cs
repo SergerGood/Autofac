@@ -4,15 +4,15 @@ namespace Sample
 {
     public class TodayWriter : IDateWriter
     {
-        private IOutput _output;
+        private IOutput output;
         public TodayWriter(IOutput output)
         {
-            this._output = output;
+            this.output = output;
         }
 
         public void WriteDate()
         {
-            this._output.Write(DateTime.Today.ToShortDateString());
+            output.Write(DateTime.Today.ToShortDateString());
         }
     }
 }

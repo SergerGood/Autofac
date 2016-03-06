@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
 
 namespace Sample
 {
@@ -14,6 +15,17 @@ namespace Sample
             builder.RegisterType<TodayWriter>().As<IDateWriter>();
 
             Container = builder.Build();
+
+            WriteDate();
+        }
+
+        private static void WriteDate()
+        {
+            using (var scope = Container.BeginLifetimeScope())
+            {
+                var writer = scope.Resolve<IDateWriter>();
+                writer.WriteDate();
+            }
         }
     }
 }
