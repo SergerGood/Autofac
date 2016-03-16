@@ -26,6 +26,8 @@ namespace Sample
                 .As<TextWriter>()
                 .ExternallyOwned();
 
+            builder.Register(c => new A() { MyB = c.ResolveOptional<B>() });
+
             Container = builder.Build();
 
             WriteDate();
