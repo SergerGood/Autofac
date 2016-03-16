@@ -26,9 +26,27 @@ namespace Sample
                 .As<TextWriter>()
                 .ExternallyOwned();
 
+            //Property Injection
             builder.Register(c => new A() { MyB = c.ResolveOptional<B>() });
 
+            //selection of an Implementation by Parameter Value
+            builder.Register<CreditCard>(
+                (c, p) =>
+                {
+                    var accountId = p.Named<string>("accountId");
+                    if (accountId.StartsWith("9"))
+                    {
+                        return new GoldCard(accountId);
+                    }
+                    else
+                    {
+                        return new StandartCard(accountId);
+                    }
+                });
+
             Container = builder.Build();
+
+            var card = Container.Resolve<CreditCard>(new NamedParameter("accountId", "12345"));
 
             WriteDate();
         }
