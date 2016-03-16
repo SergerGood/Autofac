@@ -44,9 +44,15 @@ namespace Sample
                     }
                 });
 
+            //Generic Components
+            builder.RegisterGeneric(typeof(NHibernateRepository<>))
+                .As(typeof(IRepository<>))
+                .InstancePerLifetimeScope();
+
             Container = builder.Build();
 
             var card = Container.Resolve<CreditCard>(new NamedParameter("accountId", "12345"));
+            var task = Container.Resolve<IRepository<Task>>();
 
             WriteDate();
         }
