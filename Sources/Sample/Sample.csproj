@@ -52,6 +52,7 @@
     <Compile Include="ConfigReader.cs" />
     <Compile Include="ConsoleLogger.cs" />
     <Compile Include="CreditCard.cs" />
+    <Compile Include="FileLogger.cs" />
     <Compile Include="GoldCard.cs" />
     <Compile Include="IConfigReader.cs" />
     <Compile Include="IDateWriter.cs" />

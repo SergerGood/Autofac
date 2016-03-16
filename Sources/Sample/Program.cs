@@ -13,8 +13,8 @@ namespace Sample
             var builder = new ContainerBuilder();
 
             builder.RegisterType<ConsoleOutput>()
-
                 .As<IOutput>();
+
             builder.RegisterType<TodayWriter>()
                 .As<IDateWriter>();
 
@@ -49,10 +49,15 @@ namespace Sample
                 .As(typeof(IRepository<>))
                 .InstancePerLifetimeScope();
 
+            //Default Registrations
+            builder.RegisterType<ConsoleLogger>().As<ILogger>();
+            builder.RegisterType<FileLogger>().As<ILogger>().PreserveExistingDefaults();
+
             Container = builder.Build();
 
             var card = Container.Resolve<CreditCard>(new NamedParameter("accountId", "12345"));
             var task = Container.Resolve<IRepository<Task>>();
+            var logger = Container.Resolve<ILogger>();
 
             WriteDate();
         }
