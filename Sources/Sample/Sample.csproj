@@ -48,7 +48,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="A.cs" />
+    <Compile Include="AModule.cs" />
     <Compile Include="B.cs" />
+    <Compile Include="BModule.cs" />
     <Compile Include="ConfigReader.cs" />
     <Compile Include="ConsoleLogger.cs" />
     <Compile Include="CreditCard.cs" />

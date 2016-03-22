@@ -63,6 +63,8 @@ namespace Sample
                 .Except<MyUnwantedType>(x => x.As<ISpecial>().SingleInstance())
                 .AsImplementedInterfaces();
 
+            //Scanning for Modules
+            builder.RegisterAssemblyModules(typeof(AModule), dataAccess);
 
             Container = builder.Build();
 
