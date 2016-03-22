@@ -1,6 +1,7 @@
 ﻿using System;
 using Autofac;
 using System.IO;
+using System.Reflection;
 
 namespace Sample
 {
@@ -54,6 +55,14 @@ namespace Sample
             //Default Registrations
             builder.RegisterType<ConsoleLogger>().As<ILogger>();
             builder.RegisterType<FileLogger>().As<ILogger>().PreserveExistingDefaults();
+
+            //Assembly Scanning
+            var dataAccess = Assembly.GetExecutingAssembly();
+            builder.RegisterAssemblyTypes(dataAccess)
+                .Where(x => x.Name.EndsWith("Repository"))
+                .Except<MyUnwantedType>(x => x.As<ISpecial>().SingleInstance())
+                .AsImplementedInterfaces();
+
 
             Container = builder.Build();
 

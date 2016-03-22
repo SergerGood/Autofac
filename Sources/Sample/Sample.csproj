@@ -59,7 +59,9 @@
     <Compile Include="ILogger.cs" />
     <Compile Include="IOutput.cs" />
     <Compile Include="IRepository.cs" />
+    <Compile Include="ISpecial.cs" />
     <Compile Include="MyComponent.cs" />
+    <Compile Include="MyUnwantedType.cs" />
     <Compile Include="NHibernateRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
