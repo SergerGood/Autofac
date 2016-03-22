@@ -27,7 +27,9 @@ namespace Sample
                 .ExternallyOwned();
 
             //Property Injection
-            builder.Register(c => new A() { MyB = c.ResolveOptional<B>() });
+            builder.Register(c => new A())
+                .OnActivated(e =>
+                e.Instance.MyB = e.Context.ResolveOptional<B>());
 
             //selection of an Implementation by Parameter Value
             builder.Register<CreditCard>(
@@ -58,6 +60,7 @@ namespace Sample
             var card = Container.Resolve<CreditCard>(new NamedParameter("accountId", "12345"));
             var task = Container.Resolve<IRepository<Task>>();
             var logger = Container.Resolve<ILogger>();
+            var a = Container.Resolve<A>();
 
             WriteDate();
         }
