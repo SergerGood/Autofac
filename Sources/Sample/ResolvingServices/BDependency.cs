@@ -2,5 +2,9 @@
 {
     public class BDependency
     {
+        public void DoSomething()
+        {
+            
+        }
     }
 }

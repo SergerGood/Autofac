@@ -28,6 +28,10 @@ namespace Sample
             {
                 // B is automatically injected into A.
                 var aDependency = scope.Resolve<ADependency>();
+
+                //Delayed Instantiation
+                var aLazy = scope.Resolve<ALazy>();
+                aLazy.M();
             }
 
             WriteDate();
@@ -36,6 +40,7 @@ namespace Sample
         private static void ResolvingServices(ContainerBuilder builder)
         {
             builder.RegisterType<ADependency>();
+            builder.RegisterType<ALazy>();
             builder.RegisterType<BDependency>();
         }
 
