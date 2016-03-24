@@ -32,6 +32,17 @@ namespace Sample
                 //Delayed Instantiation
                 var aLazy = scope.Resolve<ALazy>();
                 aLazy.M();
+
+
+                // Here we resolve a B that is InstancePerLifetimeScope();
+                var b1 = scope.Resolve<BDependency>();
+                b1.DoSomething();
+                // This will be the same as b1 from above.
+                var b2 = scope.Resolve<BDependency>();
+                b2.DoSomething();
+                // The B used in A will NOT be the same as the others.
+                var aOwned = scope.Resolve<AOwned>();
+                aOwned.M();
             }
 
             WriteDate();
@@ -41,6 +52,7 @@ namespace Sample
         {
             builder.RegisterType<ADependency>();
             builder.RegisterType<ALazy>();
+            builder.RegisterType<AOwned>();
             builder.RegisterType<BDependency>();
         }
 
