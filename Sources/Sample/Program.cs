@@ -2,6 +2,7 @@
 using Autofac;
 using System.IO;
 using System.Reflection;
+using Sample.ResolvingServices;
 
 namespace Sample
 {
@@ -13,6 +14,33 @@ namespace Sample
         {
             var builder = new ContainerBuilder();
 
+            RegisteringComponents(builder);
+            ResolvingServices(builder);
+
+            Container = builder.Build();
+
+            var card = Container.Resolve<CreditCard>(new NamedParameter("accountId", "12345"));
+            var task = Container.Resolve<IRepository<Task>>();
+            var logger = Container.Resolve<ILogger>();
+            var a = Container.Resolve<A>();
+
+            using (var scope = Container.BeginLifetimeScope())
+            {
+                // B is automatically injected into A.
+                var aDependency = scope.Resolve<ADependency>();
+            }
+
+            WriteDate();
+        }
+
+        private static void ResolvingServices(ContainerBuilder builder)
+        {
+            builder.RegisterType<ADependency>();
+            builder.RegisterType<BDependency>();
+        }
+
+        private static void RegisteringComponents(ContainerBuilder builder)
+        {
             builder.RegisterType<ConsoleOutput>()
                 .As<IOutput>();
 
@@ -30,7 +58,7 @@ namespace Sample
             //Property Injection
             builder.Register(c => new A())
                 .OnActivated(e =>
-                e.Instance.MyB = e.Context.ResolveOptional<B>());
+                    e.Instance.MyB = e.Context.ResolveOptional<B>());
 
             //selection of an Implementation by Parameter Value
             builder.Register<CreditCard>(
@@ -65,15 +93,6 @@ namespace Sample
 
             //Scanning for Modules
             builder.RegisterAssemblyModules(typeof(AModule), dataAccess);
-
-            Container = builder.Build();
-
-            var card = Container.Resolve<CreditCard>(new NamedParameter("accountId", "12345"));
-            var task = Container.Resolve<IRepository<Task>>();
-            var logger = Container.Resolve<ILogger>();
-            var a = Container.Resolve<A>();
-
-            WriteDate();
         }
 
         private static void WriteDate()
