@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="A.cs" />
+    <Compile Include="IService.cs" />
+    <Compile Include="Override.cs" />
     <Compile Include="ResolvingServices\ADependency.cs" />
     <Compile Include="AModule.cs" />
     <Compile Include="B.cs" />

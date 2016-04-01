@@ -24,6 +24,17 @@ namespace Sample
             var logger = Container.Resolve<ILogger>();
             var a = Container.Resolve<A>();
 
+            //Adding Registrations to a Lifetime Scope
+            using (var scope = Container.BeginLifetimeScope(x =>
+            {
+                x.RegisterType<Override>().As<IService>();
+            }))
+            {
+                // The additional registrations will be available
+                // only in this lifetime scope.
+                var r = scope.Resolve<IService>();
+            }
+
             using (var scope = Container.BeginLifetimeScope())
             {
                 // B is automatically injected into A.
