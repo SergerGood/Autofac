@@ -78,6 +78,7 @@
     <Compile Include="StandartCard.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="TodayWriter.cs" />
+    <Compile Include="Worker.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

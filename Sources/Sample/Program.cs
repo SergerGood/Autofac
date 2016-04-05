@@ -17,6 +17,11 @@ namespace Sample
             RegisteringComponents(builder);
             ResolvingServices(builder);
 
+            builder.RegisterType<Worker>()
+                .InstancePerDependency()
+                .OnRelease(instance =>
+                    instance.Dispose());
+
             Container = builder.Build();
 
             var card = Container.Resolve<CreditCard>(new NamedParameter("accountId", "12345"));
@@ -33,6 +38,18 @@ namespace Sample
                 // The additional registrations will be available
                 // only in this lifetime scope.
                 var r = scope.Resolve<IService>();
+            }
+
+            using (var scope = Container.BeginLifetimeScope())
+            {
+                while (true)
+                {
+                    // Every one of the Worker instances
+                    // resolved in this loop will be brand new.
+                    // Out of memory!
+                    var w = scope.Resolve<Worker>();
+                    w.DoWork();
+                }
             }
 
             using (var scope = Container.BeginLifetimeScope())
