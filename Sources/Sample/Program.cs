@@ -27,6 +27,10 @@ namespace Sample
                 .As<IStartable>()
                 .SingleInstance();
 
+            //This can yield an improvement of up to 10x faster Resolve()  than builder.RegisterType<Component>();
+            builder.Register(c => 
+            new Component());
+
             Container = builder.Build();
 
 
@@ -57,6 +61,7 @@ namespace Sample
             var task = Container.Resolve<IRepository<Task>>();
             var logger = Container.Resolve<ILogger>();
             var a = Container.Resolve<A>();
+
             using (var scope = Container.BeginLifetimeScope())
             {
                 // B is automatically injected into A.
