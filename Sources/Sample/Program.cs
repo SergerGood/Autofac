@@ -22,12 +22,13 @@ namespace Sample
                 .OnRelease(instance =>
                     instance.Dispose());
 
+            //Startable Components
+            builder.RegisterType<StartupMessageWriter>()
+                .As<IStartable>()
+                .SingleInstance();
+
             Container = builder.Build();
 
-            var card = Container.Resolve<CreditCard>(new NamedParameter("accountId", "12345"));
-            var task = Container.Resolve<IRepository<Task>>();
-            var logger = Container.Resolve<ILogger>();
-            var a = Container.Resolve<A>();
 
             //Adding Registrations to a Lifetime Scope
             using (var scope = Container.BeginLifetimeScope(x =>
@@ -52,6 +53,10 @@ namespace Sample
                 }
             }
 
+            var card = Container.Resolve<CreditCard>(new NamedParameter("accountId", "12345"));
+            var task = Container.Resolve<IRepository<Task>>();
+            var logger = Container.Resolve<ILogger>();
+            var a = Container.Resolve<A>();
             using (var scope = Container.BeginLifetimeScope())
             {
                 // B is automatically injected into A.

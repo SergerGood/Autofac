@@ -76,6 +76,7 @@
     <Compile Include="ConsoleOutput .cs" />
     <Compile Include="ResolvingServices\ALazy.cs" />
     <Compile Include="StandartCard.cs" />
+    <Compile Include="StartupMessageWriter.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="TodayWriter.cs" />
     <Compile Include="Worker.cs" />
